@@ -1,0 +1,16 @@
+{
+  "name": "classroom-catchmind",
+  "version": "1.0.0",
+  "description": "교실용 실시간 캐치마인드 (교사 화면 + 학생 태블릿 화면)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

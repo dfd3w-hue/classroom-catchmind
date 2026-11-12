@@ -1,0 +1,147 @@
+:root {
+  --bg: #f3f5f9;
+  --panel: #ffffff;
+  --border: #dfe3ea;
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --text: #111827;
+  --muted: #6b7280;
+  --ok: #16a34a;
+  --bad: #dc2626;
+  --warn: #f59e0b;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-text-size-adjust: 100%;
+}
+.hidden { display: none !important; }
+.muted { color: var(--muted); }
+.small-text { font-size: 12px; }
+.error { color: var(--bad); min-height: 20px; margin-top: 8px; font-size: 14px; }
+
+/* 상단 바 */
+.topbar {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  padding: 10px 16px; background: var(--panel); border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 5;
+}
+.brand { font-weight: 700; font-size: 18px; }
+.role { font-size: 12px; font-weight: 600; color: var(--primary); border: 1px solid var(--primary); border-radius: 6px; padding: 1px 6px; margin-left: 4px; }
+.roominfo { font-size: 15px; }
+.code { font-size: 24px; letter-spacing: 3px; color: var(--primary); margin-left: 4px; }
+.statusbox { color: var(--muted); font-size: 14px; }
+.timer { margin-left: auto; font-size: 30px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.timer.urgent { color: var(--bad); }
+.me strong { font-size: 18px; }
+.me .score { color: var(--primary); font-weight: 700; margin-left: 6px; }
+
+/* 교사 레이아웃 */
+.layout {
+  display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 12px;
+  padding: 12px; max-width: 1500px; margin: 0 auto;
+}
+@media (max-width: 960px) { .layout { grid-template-columns: 1fr; } }
+.panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+.panel-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 15px; }
+.count { font-weight: 600; color: var(--primary); }
+.side h3 { margin: 14px 0 8px; font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: .3px; }
+.side h3:first-child { margin-top: 0; }
+label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+label input, label select {
+  display: block; width: 100%; margin-top: 4px; padding: 9px 10px; font-size: 15px;
+  border: 1px solid var(--border); border-radius: 8px; background: #fff; color: var(--text);
+}
+
+/* 캔버스 */
+canvas#board {
+  width: 100%; aspect-ratio: 4 / 3; display: block; background: #fff;
+  border: 1px solid var(--border); border-radius: 8px;
+  touch-action: none; user-select: none; -webkit-user-select: none;
+}
+canvas#board.drawable { cursor: crosshair; border-color: var(--primary); }
+.word-line { margin-top: 8px; font-size: 16px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.word { font-size: 22px; color: var(--primary); letter-spacing: 1px; }
+
+/* 버튼 */
+button, .btn {
+  font: inherit; font-size: 15px; padding: 10px 14px; border-radius: 8px; cursor: pointer;
+  border: 1px solid var(--border); background: #fff; color: var(--text); text-decoration: none; text-align: center;
+}
+button:hover, .btn:hover { background: #f8fafc; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+button.primary, .btn.primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+button.primary:hover:not(:disabled), .btn.primary:hover { background: var(--primary-dark); }
+button.small { font-size: 12px; padding: 4px 8px; }
+button.active { background: #e0e7ff; border-color: var(--primary); color: var(--primary); font-weight: 600; }
+.big { font-size: 17px; padding: 14px 18px; }
+.block { display: block; width: 100%; margin-top: 10px; }
+.btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.btns.row { grid-template-columns: 1fr; margin-top: 12px; }
+
+/* 학생 목록 */
+.players { list-style: none; margin: 0; padding: 0; max-height: 320px; overflow: auto; }
+.player {
+  display: flex; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid var(--border);
+  border-radius: 8px; margin-bottom: 6px; cursor: pointer; background: #fff;
+}
+.player:hover { background: #f8fafc; }
+.player.selected { border-color: var(--primary); background: #eff6ff; }
+.player.drawer { border-color: var(--warn); background: #fffbeb; }
+.player.offline { opacity: .55; }
+.pname { font-weight: 600; flex: 1; }
+.badges { display: flex; gap: 4px; }
+.badge { font-size: 11px; padding: 2px 6px; border-radius: 6px; background: #fef3c7; color: #92400e; }
+.badge.ok { background: #dcfce7; color: #166534; }
+.badge.bad { background: #fee2e2; color: #991b1b; }
+.badge.off { background: #e5e7eb; color: #374151; }
+.player .score { font-variant-numeric: tabular-nums; min-width: 44px; text-align: right; }
+.kick { padding: 2px 8px; font-size: 14px; color: var(--muted); border-color: transparent; }
+.kick:hover { color: var(--bad); background: #fee2e2; }
+.joinurl { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 14px; background: #f8fafc; border: 1px dashed var(--border); border-radius: 8px; padding: 10px; word-break: break-all; line-height: 1.6; }
+
+/* 결과 모달(교사) */
+.modal { position: fixed; inset: 0; background: rgba(17, 24, 39, .45); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 20; }
+.modal-card { background: #fff; border-radius: 12px; padding: 20px; width: 100%; max-width: 620px; max-height: 90vh; overflow: auto; }
+.modal-card h2 { margin: 0 0 8px; }
+.result-word { font-size: 20px; margin-bottom: 4px; }
+.result-word strong { color: var(--primary); font-size: 26px; }
+.result-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 15px; }
+.result-table th, .result-table td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--border); }
+.result-table th { color: var(--muted); font-weight: 600; font-size: 13px; }
+
+/* 입장 카드 */
+.landing, .student .screen#joinScreen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 16px; }
+.join-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 28px 24px; width: 100%; max-width: 420px; }
+.join-card h1 { margin: 0 0 6px; font-size: 26px; }
+.join-card p { margin: 0 0 16px; }
+
+/* 학생 화면 */
+.student-main { padding: 12px; max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+.infobox { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 12px; font-size: 16px; }
+.infobox.drawer { border-color: var(--warn); background: #fffbeb; }
+.infobox.result { border-color: var(--primary); }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 10px; }
+.colors { display: flex; gap: 6px; }
+.swatch { width: 34px; height: 34px; border-radius: 50%; border: 3px solid #fff; padding: 0; outline: 1px solid var(--border); }
+.swatch.active { outline: 3px solid var(--primary); }
+.widths { display: flex; gap: 4px; }
+.tools button { padding: 8px 12px; font-size: 14px; }
+.answer-row { display: flex; gap: 8px; margin-top: 10px; }
+.answer-row input { flex: 1; padding: 12px; font-size: 18px; border: 1px solid var(--border); border-radius: 8px; }
+.answer-row button { padding: 12px 20px; font-size: 16px; }
+.mine { margin: 6px 0 10px; font-size: 17px; font-weight: 600; }
+.mine.ok { color: var(--ok); }
+.mine.bad { color: var(--bad); }
+.scoreboard { margin: 0; padding-left: 22px; }
+.scoreboard li { display: flex; justify-content: space-between; padding: 6px 4px; border-bottom: 1px solid var(--border); }
+.scoreboard li.me-row { background: #eff6ff; font-weight: 700; }
+
+/* 토스트 */
+.toast {
+  position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
+  background: #111827; color: #fff; padding: 10px 16px; border-radius: 8px; font-size: 14px; z-index: 30;
+}

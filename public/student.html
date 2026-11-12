@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>학생 화면 - 교실 캐치마인드</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="student">
+
+<section id="joinScreen" class="screen">
+  <div class="join-card">
+    <h1>교실 캐치마인드</h1>
+    <p class="muted">선생님 화면에 보이는 방 번호를 입력하세요.</p>
+    <form id="joinForm">
+      <label>방 번호 <input id="code" inputmode="numeric" maxlength="4" placeholder="1234" required></label>
+      <label>내 이름 <input id="name" maxlength="12" placeholder="홍길동" required autocomplete="off"></label>
+      <button class="primary big block" type="submit">입장하기</button>
+      <div id="joinError" class="error"></div>
+    </form>
+  </div>
+</section>
+
+<section id="gameScreen" class="screen hidden">
+  <header class="topbar">
+    <div class="me"><strong id="myName"></strong> <span id="myScore" class="score"></span></div>
+    <div id="roundLabel" class="muted"></div>
+    <div class="timer" id="timer">--:--</div>
+  </header>
+
+  <main class="student-main">
+    <div id="waitBox" class="infobox">선생님이 라운드를 시작할 때까지 기다려 주세요.</div>
+
+    <div id="drawerBox" class="infobox drawer hidden">
+      <div class="word-line">내가 출제자! 제시어: <strong id="myWord" class="word"></strong></div>
+      <div class="tools">
+        <div class="colors" id="colors"></div>
+        <div class="widths">
+          <button data-w="3">가는 선</button>
+          <button data-w="6" class="active">보통</button>
+          <button data-w="14">굵은 선</button>
+        </div>
+        <button id="eraser">지우개</button>
+        <button id="undo">되돌리기</button>
+        <button id="clearBtn">전부 지우기</button>
+      </div>
+    </div>
+
+    <div id="guessBox" class="infobox hidden">
+      <div>출제자 <strong id="drawerName"></strong> 학생이 그리는 중입니다. 정답을 비밀로 제출하세요.</div>
+      <form id="answerForm" class="answer-row">
+        <input id="answer" maxlength="40" placeholder="정답 입력" autocomplete="off">
+        <button class="primary" type="submit">제출</button>
+      </form>
+      <div id="answerStatus" class="muted"></div>
+    </div>
+
+    <div id="resultBox" class="infobox result hidden">
+      <div class="result-word">정답: <strong id="rWord"></strong></div>
+      <div id="rMine" class="mine"></div>
+      <ol id="scoreboard" class="scoreboard"></ol>
+      <div class="muted small-text">선생님이 다음 라운드를 시작하면 자동으로 넘어갑니다.</div>
+    </div>
+
+    <canvas id="board"></canvas>
+  </main>
+</section>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="shared.js"></script>
+<script src="student.js"></script>
+</body>
+</html>

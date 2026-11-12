@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>교사 화면 - 교실 캐치마인드</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="teacher">
+<header class="topbar">
+  <div class="brand">교실 캐치마인드 <span class="role">교사</span></div>
+  <div class="roominfo">방 번호 <strong id="code" class="code">----</strong></div>
+  <div class="statusbox" id="statusText">대기 중</div>
+  <div class="timer" id="timer">--:--</div>
+</header>
+
+<main class="layout">
+  <section class="panel canvas-panel">
+    <div class="panel-head">
+      <span id="drawerLine">학생 이름을 눌러 출제자를 선택하세요</span>
+      <span id="answerCount" class="count">참여 0명</span>
+    </div>
+    <canvas id="board"></canvas>
+    <div class="word-line">
+      제시어: <strong id="word" class="word">-</strong>
+      <button id="toggleWord" class="small">숨기기</button>
+    </div>
+  </section>
+
+  <aside class="panel side">
+    <h3>참여 학생 <span id="playerCount" class="count">0</span></h3>
+    <ul id="players" class="players"></ul>
+
+    <h3>라운드 설정</h3>
+    <label>제시어 범주 <select id="category"></select></label>
+    <label>제시어 직접 입력 <input id="customWord" placeholder="비우면 범주에서 랜덤"></label>
+    <label>제한 시간
+      <select id="seconds">
+        <option value="30">30초</option>
+        <option value="60" selected>60초</option>
+        <option value="90">90초</option>
+        <option value="120">120초</option>
+        <option value="180">180초</option>
+      </select>
+    </label>
+    <div class="btns">
+      <button id="randomDrawer">출제자 랜덤</button>
+      <button id="start" class="primary" disabled>라운드 시작</button>
+      <button id="end" disabled>라운드 종료</button>
+      <button id="clear">그림 지우기</button>
+      <button id="reset">점수 초기화</button>
+      <button id="newRoom">새 방 만들기</button>
+    </div>
+
+    <h3>학생 접속 주소</h3>
+    <div id="joinUrl" class="joinurl">불러오는 중...</div>
+    <p class="muted small-text">학생 태블릿에서 위 주소로 접속한 뒤 방 번호와 이름을 입력합니다.</p>
+  </aside>
+</main>
+
+<div id="result" class="modal hidden">
+  <div class="modal-card">
+    <h2>라운드 결과</h2>
+    <div class="result-word">정답: <strong id="resultWord"></strong></div>
+    <div id="resultMeta" class="muted"></div>
+    <table class="result-table">
+      <thead><tr><th>학생</th><th>제출한 답</th><th>결과</th></tr></thead>
+      <tbody id="resultBody"></tbody>
+    </table>
+    <div class="btns row">
+      <button id="next" class="primary">다음 라운드 준비</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="shared.js"></script>
+<script src="teacher.js"></script>
+</body>
+</html>
